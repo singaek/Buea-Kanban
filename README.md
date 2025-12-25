@@ -39,4 +39,4 @@ Storage: Google Drive API (สำหรับเก็บไฟล์งาน�
 
 - การส่งข้อมูลผ่าน HTTPS มั่นใจได้ว่าข้อมูลของคุณจะปลอดภัย# -
 
-ติดตามไอจีของพวกเรา [act.bkbm2]([https://www.instagram.com/act.freedom](https://www.instagram.com/bkb.actm2?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==))
+> ติดตามไอจีของพวกเรา [act.bkbm2]([https://www.instagram.com/bkb.actm2?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==])
