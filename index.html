@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เบื่อการบ้านนน</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://i.postimg.cc/LXFBHWg3/Stud-o-imresizer.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kanit:wght@400;500;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    
+
+    <style>
+        /* Base Styles */
+        body { 
+            font-family: 'Inter', 'Kanit', sans-serif;
+            background-color: #f7f9fc; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            transition: background-color 0.5s ease;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 960px; 
+            padding: 1.5rem; 
+            /* เพิ่ม padding ด้านล่าง เพื่อไม่ให้ข้อความทับเนื้อหา */
+            padding-bottom: 3.5rem; 
+            background-color: white; 
+            border-radius: 1rem; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); 
+            margin: 2rem 0; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        /* --- Night Mode Styles --- */
+        body.night-mode {
+            background-color: #111827 !important; 
+            color: #f3f4f6 !important;
+        }
+        body.night-mode .container, 
+        body.night-mode .card,
+        body.night-mode .modal-content,
+        body.night-mode .bg-white {
+            background-color: #1f2937 !important; 
+            color: #e5e7eb !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+        }
+        body.night-mode .text-gray-800, 
+        body.night-mode .text-gray-700,
+        body.night-mode .text-gray-600 {
+            color: #d1d5db !important; 
+        }
+        body.night-mode .input-field,
+        body.night-mode select {
+            background-color: #374151 !important;
+            border-color: #4b5563 !important;
+            color: white !important;
+        }
+        body.night-mode .bg-gray-50,
+        body.night-mode .bg-blue-50,
+        body.night-mode .bg-gray-100 {
+            background-color: #374151 !important;
+            border-color: #4b5563 !important;
+            color: #e5e7eb !important;
+        }
+        body.night-mode thead tr { background-color: #4b5563 !important; }
+        body.night-mode thead th { color: #f9fafb !important; }
+        body.night-mode tbody tr:nth-child(odd) { background-color: #283141 !important; }
+
+        /* --- Original Styles --- */
+        .modal-body { max-height: 70vh; overflow-y: auto; }
+        .input-field { 
+            border: 1px solid #d1d5db; 
+            border-radius: 0.5rem; 
+            padding: 0.75rem 1rem; 
+            width: 100%; 
+            font-size: 1rem; 
+            transition: border-color 0.2s;
+        }
+        .input-field:focus {
+            border-color: #6366f1; 
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-primary { 
+            background-color: #6366f1; 
+            color: white; 
+            padding: 0.75rem 1.25rem; 
+            border-radius: 0.75rem; 
+            font-weight: 600; 
+            transition: all 0.2s ease-in-out; 
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+        }
+        .btn-primary:hover { 
+            background-color: #4f46e5; 
+            box-shadow: 0 6px 8px rgba(99, 102, 241, 0.3);
+        }
+        .btn-secondary { 
+            background-color: #e5e7eb; 
+            color: #374151; 
+            padding: 0.75rem 1.25rem; 
+            border-radius: 0.75rem; 
+            font-weight: 600; 
+            transition: background-color 0.2s ease-in-out; 
+        }
+        .btn-secondary:hover { 
+            background-color: #d1d5db; 
+            color: #1f2937;
+        }
+        .btn-red { 
+            background-color: #f87171; 
+            color: white; 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.5rem; 
+            font-weight: 500; 
+            transition: background-color 0.2s ease-in-out; 
+        }
+        .btn-red:hover { background-color: #ef4444; }
+        .btn-green { 
+            background-color: #4ade80; 
+            color: #166534; 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.5rem; 
+            font-weight: 600; 
+            transition: background-color 0.2s ease-in-out, color 0.2s; 
+        }
+        .btn-green:hover { background-color: #22c55e; color: white; }
+
+        .card { 
+            background-color: white; 
+            border-radius: 1rem; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+            padding: 1.5rem; 
+            position: relative; 
+            border-left: 5px solid #a5b4fc; 
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        .card .checkmark-icon { 
+            position: absolute; 
+            top: 1rem; 
+            right: 1rem; 
+            color: #22c55e; 
+            font-size: 1.75rem; 
+        }
+
+        .status-badge { 
+            display: inline-block; 
+            padding: 0.3rem 0.75rem; 
+            border-radius: 9999px; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            margin-top: 0.75rem; 
+            text-transform: uppercase;
+        }
+        .status-pending { background-color: #fef08a; color: #a16207; }
+        .status-due-soon { background-color: #93c5fd; color: #1e40af; }
+        .status-overdue { background-color: #fca5a5; color: #991b1b; }
+        .status-graded, .status-submitted { background-color: #a7f3d0; color: #065f46; }
+        .status-returned { background-color: #fed7aa; color: #9a3412; }
+        
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .spinner { border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid #fff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .filter-btn { 
+            background-color: #f3f4f6; 
+            color: #4b5563; 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.75rem; 
+            font-weight: 500; 
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s; 
+            border: 1px solid #e5e7eb;
+            white-space: nowrap; 
+        }
+        .filter-btn:hover { background-color: #e5e7eb; color: #1f2937; }
+        .filter-btn.active { 
+            background-color: #6366f1; 
+            color: white; 
+            border-color: #4f46e5; 
+            box-shadow: 0 2px 5px rgba(99, 102, 241, 0.4);
+        }
+        
+        @media (max-width: 768px) { 
+            .flex-col-mobile { flex-direction: column; } 
+            .gap-4-mobile > div { margin-bottom: 1rem; } 
+            .modal-content { width: 95%; margin: auto; } 
+        }
+        
+        .fa-book-reader, .fa-search, .fa-chalkboard-teacher, .fa-id-card, .fa-eye { color: #6366f1; }
+        .fa-cogs, .fa-users-cog, .fa-user-plus, .fa-list-alt { color: #2563eb; }
+        .fa-edit, .fa-chalkboard, .fa-plus-circle, .fa-th-list { color: #059669; }
+        
+        .student-submission-file::-webkit-file-upload-button {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #a5b4fc;
+            background-color: #eef2ff; 
+            color: #4f46e5;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .student-submission-file::-webkit-file-upload-button:hover { background-color: #e0e7ff; }
+
+        /* ========================================= */
+        /* === LOGOUT BUTTON ANIMATION CSS START === */
+        /* ========================================= */
+        .logoutButton {
+          --figure-duration: 100ms;
+          --transform-figure: none;
+          --walking-duration: 100ms;
+          --transform-arm1: none;
+          --transform-wrist1: none;
+          --transform-arm2: none;
+          --transform-wrist2: none;
+          --transform-leg1: none;
+          --transform-calf1: none;
+          --transform-leg2: none;
+          --transform-calf2: none;
+          background: none;
+          border: 0;
+          color: #f4f7ff;
+          cursor: pointer;
+          display: block;
+          font-family: "Quicksand", "Kanit", sans-serif; 
+          font-size: 16px; 
+          font-weight: 700; 
+          height: 40px;
+          outline: none;
+          padding: 0 0 0 20px;
+          perspective: 100px;
+          position: relative;
+          text-align: left;
+          width: 130px;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .logoutButton::before {
+          background-color: #1f2335;
+          border-radius: 5px;
+          content: "";
+          display: block;
+          height: 100%;
+          left: 0;
+          position: absolute;
+          top: 0;
+          transform: none;
+          transition: transform 50ms ease;
+          width: 100%;
+          z-index: 2;
+        }
+        .logoutButton:hover .door { transform: rotateY(20deg); }
+        .logoutButton:active::before { transform: scale(0.96); }
+        .logoutButton:active .door { transform: rotateY(28deg); }
+        .logoutButton.clicked::before { transform: none; }
+        .logoutButton.clicked .door { transform: rotateY(35deg); }
+        .logoutButton.door-slammed .door { transform: none; transition: transform 100ms ease-in 250ms; }
+        .logoutButton.falling { animation: shake 200ms linear; }
+        .logoutButton.falling .bang { animation: flash 300ms linear; }
+        .logoutButton.falling .figure {
+          animation: spin 1000ms infinite linear;
+          bottom: -1080px;
+          opacity: 0;
+          right: 1px;
+          transition: transform calc(var(--figure-duration) * 1ms) linear, bottom calc(var(--figure-duration) * 1ms) cubic-bezier(0.7, 0.1, 1, 1) 100ms, opacity calc(var(--figure-duration) * 0.25ms) linear calc(var(--figure-duration) * 0.75ms);
+          z-index: 1;
+        }
+        
+        .logoutButton--light::before { background-color: #f4f7ff; border: 1px solid #d1d5db; }
+        .logoutButton--light .button-text { color: #1f2335; }
+        .logoutButton--light .door, .logoutButton--light .doorway { fill: #1f2335; }
+
+        .logoutButton--dark::before { background-color: #1f2335; border: 1px solid #4b5563; }
+        .logoutButton--dark .button-text { color: #f4f7ff; }
+        .logoutButton--dark .door, .logoutButton--dark .doorway { fill: #f4f7ff; }
+
+        .button-text {
+          color: #f4f7ff;
+          font-weight: 700; 
+          position: relative;
+          z-index: 10;
+        }
+
+        .logoutButton svg { display: block; position: absolute; }
+        .figure {
+          bottom: 5px; fill: #4371f7; right: 18px;
+          transform: var(--transform-figure);
+          transition: transform calc(var(--figure-duration) * 1ms) cubic-bezier(0.2, 0.1, 0.8, 0.9);
+          width: 30px; z-index: 4;
+        }
+        .door, .doorway { bottom: 4px; fill: #f4f7ff; right: 12px; width: 32px; }
+        .door {
+          transform: rotateY(20deg);
+          transform-origin: 100% 50%;
+          transform-style: preserve-3d;
+          transition: transform 200ms ease;
+          z-index: 5;
+        }
+        .door path { fill: #4371f7; stroke: #4371f7; stroke-width: 4; }
+        .doorway { z-index: 3; }
+        .bang { opacity: 0; }
+        .arm1, .wrist1, .arm2, .wrist2, .leg1, .calf1, .leg2, .calf2 {
+          transition: transform calc(var(--walking-duration) * 1ms) ease-in-out;
+        }
+        .arm1 { transform: var(--transform-arm1); transform-origin: 52% 45%; }
+        .wrist1 { transform: var(--transform-wrist1); transform-origin: 59% 55%; }
+        .arm2 { transform: var(--transform-arm2); transform-origin: 47% 43%; }
+        .wrist2 { transform: var(--transform-wrist2); transform-origin: 35% 47%; }
+        .leg1 { transform: var(--transform-leg1); transform-origin: 47% 64.5%; }
+        .calf1 { transform: var(--transform-calf1); transform-origin: 55.5% 71.5%; }
+        .leg2 { transform: var(--transform-leg2); transform-origin: 43% 63%; }
+        .calf2 { transform: var(--transform-calf2); transform-origin: 41.5% 73%; }
+
+        @keyframes spin { from { transform: rotate(0deg) scale(0.94); } to { transform: rotate(359deg) scale(0.94); } }
+        @keyframes shake { 0% { transform: rotate(-1deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(-1deg); } }
+        @keyframes flash { 0% { opacity: 0.4; } 100% { opacity: 0; } }
+        
+        /* New Link Styles */
+        .credits-link {
+            transition: color 0.3s ease;
+        }
+        .credits-link:hover {
+            color: #4f46e5;
+            text-decoration: underline;
+        }
+        .help-link-container {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px; /* เล็กๆ เท่ากัน */
+}
+
+.help-link-container span {
+    color: #999;          /* สีเทา */
+    pointer-events: none; /* กดไม่ได้ */
+}
+
+.help-link-container a {
+    color: #555;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.help-link-container a:hover {
+    text-decoration: underline;
+}
+
+        .help-link {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        .help-link:hover {
+            color: #6366f1;
+            transform: translateY(-1px);
+        }
+        body.night-mode .help-link { color: #9ca3af; }
+        body.night-mode .help-link:hover { color: #818cf8; }
+
+        /* Profile Modal Styles */
+        .profile-img-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1rem;
+            border: 4px solid #e0e7ff;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .profile-img-container:hover {
+            transform: scale(1.05);
+            border-color: #6366f1;
+        }
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-name {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .profile-name:hover {
+            color: #4f46e5;
+        }
+        .credit-carousel {
+    position: relative;
+}
+
+.credit-slide {
+    display: none;
+    animation: fade 0.5s ease-in-out;
+}
+
+.credit-slide.active {
+    display: block;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.profile-img {
+        width: 96px; /* W-24 in Tailwind */
+        height: 96px; /* H-24 in Tailwind */
+        border-radius: 50%; /* Rounded-full in Tailwind */
+        object-fit: cover;
+        border: 4px solid #4f46e5; /* Border-indigo-600 */
+        transition: transform 0.3s ease;
+    }
+
+    .profile-img:hover {
+        transform: scale(1.05);
+    }
+
+    /* CSS สำหรับ Carousel (จำเป็นต้องเพิ่มเพราะ Tailwind ไม่มีคลาสสำหรับจัดการการเปลี่ยนสไลด์แบบนี้) */
+    .credit-carousel {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .credit-slide {
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .credit-slide.active {
+        display: block;
+    }
+
+    /* CSS สำหรับตัวบ่งชี้สไลด์ (Carousel Indicators) */
+    .credit-indicators {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .indicator-dot {
+        height: 8px;
+        width: 8px;
+        margin: 0 4px;
+        background-color: #d1d5db; /* Gray-300 */
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .indicator-dot.active {
+        background-color: #4f46e5; /* Indigo-600 */
+    }
+
+        
+    </style>
+</head>
+<body>
+    <div id="lang-widget-container">
+        <button id="lang-widget-trigger">
+            <i class="fas fa-globe" style="margin-right: 8px;"></i>
+            <span id="lang-widget-current">ภาษา</span>
+            <i class="fas fa-chevron-down" style="margin-left: auto; padding-left: 8px; font-size: 0.8em;"></i>
+        </button>
+        <div id="lang-dropdown-panel" class="hidden"></div>
+    </div>
+
+    <div id="google_translate_element" style="display:none;"></div>
+    
+    <div class="container relative">
+        <!-- New Credit Link (Top Left) -->
+        <a href="#" id="creditLink" class="credits-link absolute top-4 left-6 text-gray-500 hover:text-indigo-600 text-sm font-medium"><i class="fas fa-heart mr-1"></i>เครดิต/โดเนท</a>
+
+        <a href="#" id="staffLoginLink" class="absolute top-4 right-6 text-indigo-600 hover:text-indigo-800 text-sm font-medium"><i class="fas fa-user-shield mr-1"></i>เฉพาะเจ้าหน้าที่</a>
+
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6"><i class="fas fa-book-reader mr-2"></i>เบื่อการบ้านนน</h1>
+        <p class="text-xs text-red-500 text-center mb-6">(สำหรับเด็ก ACT M.2 เท่านั้น)</p>
+
+        <div id="studentView" class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4"><i class="fas fa-search mr-2"></i>ค้นหาการบ้าน</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label for="classroomSelect" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-chalkboard-teacher mr-1"></i> เลือกห้องเรียน:</label>
+                    <select id="classroomSelect" class="input-field">
+                        <option value="">เลือกห้องเรียน</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="studentIdInput" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-id-card mr-1"></i> ป้อนเลขที่:</label>
+                    <input type="number" id="studentIdInput" class="input-field" placeholder="เช่น 15" min="1">
+                </div>
+                <div class="flex items-end">
+                    <button id="showHomeworkBtn" class="btn-primary w-full"><i class="fas fa-eye mr-2"></i>แสดงการบ้าน</button>
+                </div>
+            </div>
+
+            <div id="homeworkFilterControls" class="hidden mb-6 p-4 bg-gray-50 rounded-lg">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="subjectFilter" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-book mr-1"></i> กรองตามวิชา:</label>
+                        <select id="subjectFilter" class="input-field">
+                            <option value="">ทุกวิชา</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-filter mr-1"></i> กรองตามสถานะ:</label>
+                        <div id="statusFilter" class="flex flex-wrap gap-2">
+                             <button class="filter-btn active" data-status="all"><i class="fas fa-list-ul mr-1"></i>ทั้งหมด</button>
+                             <button class="filter-btn" data-status="pending"><i class="fas fa-clock mr-1"></i>ยังไม่ส่ง</button>
+                             <button class="filter-btn" data-status="submitted"><i class="fas fa-paper-plane mr-1"></i>ส่งแล้ว</button>
+                             <button class="filter-btn" data-status="graded"><i class="fas fa-check-double mr-1"></i>ตรวจแล้ว</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="homeworkResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div id="noHomeworkMessage" class="text-center text-gray-500 mt-4 hidden">
+                <p>ไม่พบการบ้านสำหรับนักเรียนคนนี้ หรือข้อมูลไม่ถูกต้อง</p>
+            </div>
+        </div>
+        
+        <!-- New Help Link (Bottom Left) -->
+       <div class="help-link-container">
+    <span class="help-text">
+        หากพบบัคหรือปัญหาแจ้งที่ DM ไอจี:bkb.actm2
+    </span>
+    <a href="https://www.instagram.com/bkb.actm2?igsh=MTIydWpnYW03ejJvbg==" 
+       target="_blank" 
+       class="help-link">
+        <i class="fab fa-instagram"></i> อยากช่วยเราลงการบ้านหรอ?
+    </a>
+</div>
+
+        <div id="staffLoginModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md modal-content">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center"><i class="fas fa-sign-in-alt mr-2"></i>เข้าสู่ระบบเจ้าหน้าที่</h3>
+                <div class="mb-4">
+                    <label for="staffUsername" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-user mr-1"></i> ชื่อผู้ใช้:</label>
+                    <input type="text" id="staffUsername" class="input-field" placeholder="Username">
+                </div>
+                <div class="mb-6">
+                    <label for="staffPassword" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-key mr-1"></i> รหัสผ่าน:</label>
+                    <input type="password" id="staffPassword" class="input-field" placeholder="Password">
+                </div>
+                <div id="loginMessage" class="text-red-500 text-sm mb-4 hidden"></div>
+                <div class="flex justify-end space-x-3">
+                    <button id="closeLoginModal" class="btn-secondary"><i class="fas fa-times mr-2"></i>ยกเลิก</button>
+                    <button id="loginBtn" class="btn-primary"><i class="fas fa-sign-in-alt mr-2"></i>เข้าสู่ระบบ</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="staffDashboard" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800" id="dashboardTitle"></h2>
+                
+                <button class="logoutButton logoutButton--light" id="animatedLogoutBtn">
+                    <svg class="doorway" viewBox="0 0 100 100">
+                        <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z" />
+                        <path class="bang" d="M40.5 43.7L26.6 31.4l-2.5 6.7zM41.9 50.4l-19.5-4-1.4 6.3zM40 57.4l-17.7 3.9 3.9 5.7z" />
+                    </svg>
+                    <svg class="figure" viewBox="0 0 100 100">
+                        <circle cx="52.1" cy="32.4" r="6.4" />
+                        <path d="M50.7 62.8c-1.2 2.5-3.6 5-7.2 4-3.2-.9-4.9-3.5-4-7.8.7-3.4 3.1-13.8 4.1-15.8 1.7-3.4 1.6-4.6 7-3.7 4.3.7 4.6 2.5 4.3 5.4-.4 3.7-2.8 15.1-4.2 17.9z" />
+                        <g class="arm1">
+                            <path d="M55.5 56.5l-6-9.5c-1-1.5-.6-3.5.9-4.4 1.5-1 3.7-1.1 4.6.4l6.1 10c1 1.5.3 3.5-1.1 4.4-1.5.9-3.5.5-4.5-.9z" />
+                            <path class="wrist1" d="M69.4 59.9L58.1 58c-1.7-.3-2.9-1.9-2.6-3.7.3-1.7 1.9-2.9 3.7-2.6l11.4 1.9c1.7.3 2.9 1.9 2.6 3.7-.4 1.7-2 2.9-3.8 2.6z" />
+                        </g>
+                        <g class="arm2">
+                            <path d="M34.2 43.6L45 40.3c1.7-.6 3.5.3 4 2 .6 1.7-.3 4-2 4.5l-10.8 2.8c-1.7.6-3.5-.3-4-2-.6-1.6.3-3.4 2-4z" />
+                            <path class="wrist2" d="M27.1 56.2L32 45.7c.7-1.6 2.6-2.3 4.2-1.6 1.6.7 2.3 2.6 1.6 4.2L33 58.8c-.7 1.6-2.6 2.3-4.2 1.6-1.7-.7-2.4-2.6-1.7-4.2z" />
+                        </g>
+                        <g class="leg1">
+                            <path d="M52.1 73.2s-7-5.7-7.9-6.5c-.9-.9-1.2-3.5-.1-4.9 1.1-1.4 3.8-1.9 5.2-.9l7.9 7c1.4 1.1 1.7 3.5.7 4.9-1.1 1.4-4.4 1.5-5.8.4z" />
+                            <path class="calf1" d="M52.6 84.4l-1-12.8c-.1-1.9 1.5-3.6 3.5-3.7 2-.1 3.7 1.4 3.8 3.4l1 12.8c.1 1.9-1.5 3.6-3.5 3.7-2 0-3.7-1.5-3.8-3.4z" />
+                        </g>
+                        <g class="leg2">
+                            <path d="M37.8 72.7s1.3-10.2 1.6-11.4 2.4-2.8 4.1-2.6c1.7.2 3.6 2.3 3.4 4l-1.8 11.1c-.2 1.7-1.7 3.3-3.4 3.1-1.8-.2-4.1-2.4-3.9-4.2z" />
+                            <path class="calf2" d="M29.5 82.3l9.6-10.9c1.3-1.4 3.6-1.5 5.1-.1 1.5 1.4.4 4.9-.9 6.3l-8.5 9.6c-1.3 1.4-3.6 1.5-5.1.1-1.4-1.3-1.5-3.5-.2-5z" />
+                        </g>
+                    </svg>
+                    <svg class="door" viewBox="0 0 100 100">
+                        <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z" />
+                        <circle cx="66" cy="50" r="3.7" />
+                    </svg>
+                    <span class="button-text">Log Out</span>
+                </button>
+            </div>
+
+            <div id="adminControls" class="hidden mb-8 p-6 bg-blue-50 rounded-xl shadow-inner border border-blue-200">
+                <h3 class="text-xl font-semibold text-blue-800 mb-4"><i class="fas fa-cogs mr-2"></i>ควบคุมผู้ดูแลระบบ</h3>
+                <div class="mb-6">
+                    <h4 class="text-lg font-medium text-blue-700 mb-2"><i class="fas fa-users-cog mr-2"></i>กำหนดจำนวนนักเรียนในแต่ละห้อง</h4>
+                    <div id="adminClassroomCounts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+                <div class="mb-6">
+                    <h4 class="text-lg font-medium text-blue-700 mb-2"><i class="fas fa-user-plus mr-2"></i>เพิ่มครูผู้สอน</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input type="text" id="newTeacherUsername" class="input-field" placeholder="ชื่อผู้ใช้ครู">
+                        <input type="password" id="newTeacherPassword" class="input-field" placeholder="รหัสผ่านครู">
+                        <input type="text" id="newTeacherFullName" class="input-field" placeholder="ชื่อ-นามสกุลครู">
+                        <input type="text" id="newTeacherSubjects" class="input-field" placeholder="วิชาที่สอน (คั่นด้วย ,)">
+                    </div>
+                    <button id="addTeacherBtn" class="btn-primary"><i class="fas fa-plus mr-2"></i>เพิ่มครู</button>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-blue-700 mb-2"><i class="fas fa-list-alt mr-2"></i>รายชื่อครูผู้สอน</h4>
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
+                        <thead>
+                            <tr class="bg-blue-100 text-left text-blue-800 text-sm font-medium uppercase">
+                                <th class="py-3 px-4">Username</th>
+                                <th class="py-3 px-4">ชื่อ-นามสกุล</th>
+                                <th class="py-3 px-4">วิชาที่สอน</th>
+                                <th class="py-3 px-4">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teachersList" class="divide-y divide-blue-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="teacherControls" class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4"><i class="fas fa-edit mr-2"></i>การจัดการการบ้าน</h3>
+                <div class="mb-6 flex flex-col md:flex-row gap-4 items-center">
+                    <div class="w-full md:w-1/2">
+                        <label for="teacherClassroomSelect" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-chalkboard mr-1"></i> เลือกห้องเรียน:</label>
+                        <select id="teacherClassroomSelect" class="input-field">
+                            <option value="">ทั้งหมด</option>
+                        </select>
+                    </div>
+                    <button id="createHomeworkBtn" class="btn-primary w-full md:w-auto md:mt-auto"><i class="fas fa-plus-circle mr-2"></i>สร้างการบ้าน</button>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-medium text-gray-700 mb-2"><i class="fas fa-th-list mr-2"></i>รายการการบ้านที่สร้าง</h4>
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
+                        <thead>
+                            <tr class="bg-gray-100 text-left text-gray-800 text-sm font-medium uppercase">
+                                <th class="py-3 px-4">ชื่อการบ้าน/วิชา</th>
+                                <th class="py-3 px-4">ห้องเรียน</th>
+                                <th class="py-3 px-4">กำหนดส่ง</th>
+                                <th class="py-3 px-4">คะแนนเต็ม</th>
+                                <th class="py-3 px-4">รับงานออนไลน์</th>
+                                <th class="py-3 px-4">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherHomeworkList" class="divide-y divide-gray-200"></tbody>
+                    </table>
+                    <div id="noTeacherHomeworkMessage" class="text-center text-gray-500 mt-4 hidden">
+                        <p>ยังไม่มีการบ้านที่สร้างไว้</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Credit Modal -->
+       <div id="creditModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center relative overflow-hidden">
+
+        <button id="closeCreditModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">ขอบคุณ</h3>
+
+        <div class="credit-carousel">
+            <div class="credit-slide active">
+                <a href="https://www.instagram.com/zvcbbu_/" target="_blank">
+                    <img src="https://i.postimg.cc/pdDLgqcm/495268804-18031788662655298-5162054024667152207-n.jpg"
+                         class="profile-img mx-auto">
+                </a>
+                <a href="https://www.instagram.com/zvcbbu_/" target="_blank">
+                    <h4 class="text-xl font-bold text-gray-800 mt-3">zvcbbu_</h4>
+                </a>
+                <p class="text-indigo-600 font-medium text-sm">Web Developer / IG Admin / Helper M.2/2</p>
+            </div>
+
+            <div class="credit-slide">
+                <a href="https://www.instagram.com/jelly_fixhh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                   target="_blank">
+                    <img src="https://i.postimg.cc/zGdCywnQ/487558304-643468911883153-4321314959288332714-n.jpg"
+                         class="profile-img mx-auto">
+                </a>
+                <a href="https://www.instagram.com/jelly_fixhh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                   target="_blank">
+                    <h4 class="text-xl font-bold text-gray-800 mt-3">jelly_fixhh</h4>
+                </a>
+                <p class="text-indigo-600 font-medium text-sm">Graphic Designer</p>
+            </div>
+        </div>
+
+        <div class="credit-indicators" id="creditIndicators">
+            </div>
+
+        <button id="openDonationModal"
+                class="mt-6 w-full px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-200">
+            💖 โดเนทสนับสนุน
+        </button>
+    </div>
+</div>
+
+<div id="donationModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center relative">
+
+        <button id="closeDonationModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">เลือกช่องทางการสนับสนุน</h3>
+
+        <div class="space-y-4">
+            <button id="selectPromptPay"
+                    class="w-full px-4 py-3 text-lg font-bold border-2 border-green-500 bg-green-50 text-green-700 rounded-lg shadow-sm hover:bg-green-100 transition duration-200 flex items-center justify-center">
+                <img src="https://www.bot.or.th/content/dam/bot/icons/icon-thaiqr.png" alt="PromptPay" class="h-8 mr-3">
+                พร้อมเพย์ (PromptPay)
+            </button>
+            <button id="selectTrueMoney"
+                    class="w-full px-4 py-3 text-lg font-bold border-2 border-red-500 bg-red-50 text-red-700 rounded-lg shadow-sm hover:bg-red-100 transition duration-200 flex items-center justify-center">
+                <img src="https://www.faq.co.th/wp-content/uploads/2021/04/Featured_TrueMoney_%E0%B8%97%E0%B8%A3%E0%B8%B9%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%88.png" alt="TrueMoney" class="h-8 mr-3">
+                ทรูมันนี่ (TrueMoney)
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div id="qrCodeModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-xs text-center relative">
+
+        <button id="closeQrCodeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <h3 id="qrCodeTitle" class="text-xl font-bold text-gray-800 mb-4">สแกนเพื่อสนับสนุน</h3>
+
+        <img id="qrCodeImage" src="" alt="QR Code" class="w-full h-auto rounded-lg shadow-lg">
+
+        <p class="text-sm text-gray-500 mt-4">ขอบคุณสำหรับการสนับสนุนครับ/ค่ะ</p>
+    </div>
+</div>
+
+
+        <div id="createHomeworkModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg modal-content">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center"><i class="fas fa-file-alt mr-2"></i>สร้างการบ้านใหม่</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="newHwName" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-clipboard-list mr-1"></i> ชื่อการบ้าน:</label>
+                        <input type="text" id="newHwName" class="input-field" placeholder="ชื่อการบ้าน" required>
+                    </div>
+                    <div>
+                        <label for="newHwSubject" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-book-open mr-1"></i> วิชา:</label>
+                        <input type="text" id="newHwSubject" class="input-field" placeholder="เช่น คณิตศาสตร์" required>
+                    </div>
+                    <div>
+                        <label for="newHwClassroom" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-chalkboard-teacher mr-1"></i> ห้องเรียน:</label>
+                        <select id="newHwClassroom" class="input-field" required>
+                            <option value="">เลือกห้องเรียน</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="newHwMaxScore" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-star-half-alt mr-1"></i> คะแนนเต็ม:</label>
+                        <input type="number" id="newHwMaxScore" class="input-field" placeholder="เช่น 10" min="1" required>
+                    </div>
+                     <div class="md:col-span-2">
+                        <label for="newHwDueDate" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-calendar-alt mr-1"></i> กำหนดส่ง:</label>
+                        <input type="date" id="newHwDueDate" class="input-field" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="newHwDetails" class="block text-gray-700 text-sm font-medium mb-1"><i class="fas fa-align-left mr-1"></i> รายละเอียด:</label>
+                        <textarea id="newHwDetails" class="input-field h-24 resize-y" placeholder="รายละเอียดการบ้าน"></textarea>
+                    </div>
+                    <div class="flex items-center md:col-span-2">
+                        <input type="checkbox" id="newHwOnlineSubmission" class="mr-2 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                        <label for="newHwOnlineSubmission" class="text-gray-700 text-sm font-medium"><i class="fas fa-cloud-upload-alt mr-1"></i> รับงานออนไลน์</label>
+                    </div>
+                </div>
+                <div id="createHomeworkMessage" class="text-red-500 text-sm mb-4 hidden"></div>
+                <div class="flex justify-end space-x-3">
+                    <button id="closeCreateHomeworkModal" class="btn-secondary"><i class="fas fa-times mr-2"></i>ยกเลิก</button>
+                    <button id="saveNewHomeworkBtn" class="btn-primary"><i class="fas fa-save mr-2"></i>บันทึก</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="gradeHomeworkModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-3xl modal-content">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center" id="gradeModalTitle"></h3>
+                <div class="modal-body overflow-y-auto pr-2">
+                    <div id="studentGradingList" class="space-y-4"></div>
+                </div>
+                <div id="gradeHomeworkMessage" class="text-red-500 text-sm mt-4 hidden"></div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button id="closeGradeHomeworkModal" class="btn-secondary"><i class="fas fa-times mr-2"></i>ปิด</button>
+                    <button id="saveGradingBtn" class="btn-primary"><i class="fas fa-save mr-2"></i>บันทึกคะแนน</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="customMessageBox" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm text-center modal-content">
+                <p id="messageBoxContent" class="text-gray-800 text-lg mb-4"></p>
+                <button id="closeMessageBox" class="btn-primary"><i class="fas fa-check mr-2"></i>ตกลง</button>
+            </div>
+        </div>
+
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        // ***** SCRIPT *****
+        const APP_SCRIPT_URL = 'APPSCRIPT_URL';
+
+        // UI Elements
+        const classroomSelect = document.getElementById('classroomSelect');
+        const studentIdInput = document.getElementById('studentIdInput');
+        const showHomeworkBtn = document.getElementById('showHomeworkBtn');
+        const homeworkResults = document.getElementById('homeworkResults');
+        const noHomeworkMessage = document.getElementById('noHomeworkMessage');
+        const staffLoginLink = document.getElementById('staffLoginLink');
+        const staffLoginModal = document.getElementById('staffLoginModal');
+        const staffUsername = document.getElementById('staffUsername');
+        const staffPassword = document.getElementById('staffPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const loginMessage = document.getElementById('loginMessage');
+        const staffDashboard = document.getElementById('staffDashboard');
+        const dashboardTitle = document.getElementById('dashboardTitle');
+        const logoutBtn = document.getElementById('animatedLogoutBtn');
+        const adminControls = document.getElementById('adminControls');
+        const adminClassroomCounts = document.getElementById('adminClassroomCounts');
+        const newTeacherUsername = document.getElementById('newTeacherUsername');
+        const newTeacherPassword = document.getElementById('newTeacherPassword');
+        const newTeacherFullName = document.getElementById('newTeacherFullName');
+        const newTeacherSubjects = document.getElementById('newTeacherSubjects');
+        const addTeacherBtn = document.getElementById('addTeacherBtn');
+        const teachersList = document.getElementById('teachersList');
+        const teacherControls = document.getElementById('teacherControls');
+        const teacherClassroomSelect = document.getElementById('teacherClassroomSelect');
+        const createHomeworkBtn = document.getElementById('createHomeworkBtn');
+        const teacherHomeworkList = document.getElementById('teacherHomeworkList');
+        const noTeacherHomeworkMessage = document.getElementById('noTeacherHomeworkMessage');
+        const createHomeworkModal = document.getElementById('createHomeworkModal');
+        const newHwName = document.getElementById('newHwName');
+        const newHwSubject = document.getElementById('newHwSubject');
+        const newHwClassroom = document.getElementById('newHwClassroom');
+        const newHwDetails = document.getElementById('newHwDetails');
+        const newHwDueDate = document.getElementById('newHwDueDate');
+        const newHwMaxScore = document.getElementById('newHwMaxScore');
+        const newHwOnlineSubmission = document.getElementById('newHwOnlineSubmission');
+        const closeCreateHomeworkModal = document.getElementById('closeCreateHomeworkModal');
+        const saveNewHomeworkBtn = document.getElementById('saveNewHomeworkBtn');
+        const createHomeworkMessage = document.getElementById('createHomeworkMessage');
+        const gradeHomeworkModal = document.getElementById('gradeHomeworkModal');
+        const gradeModalTitle = document.getElementById('gradeModalTitle');
+        const studentGradingList = document.getElementById('studentGradingList');
+        const closeGradeHomeworkModal = document.getElementById('closeGradeHomeworkModal');
+        const saveGradingBtn = document.getElementById('saveGradingBtn');
+        const gradeHomeworkMessage = document.getElementById('gradeHomeworkMessage');
+        const customMessageBox = document.getElementById('customMessageBox');
+        const messageBoxContent = document.getElementById('messageBoxContent');
+        const closeMessageBox = document.getElementById('closeMessageBox');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const homeworkFilterControls = document.getElementById('homeworkFilterControls');
+        const subjectFilter = document.getElementById('subjectFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        // Credit Modal Elements
+        const creditLink = document.getElementById('creditLink');
+        const creditModal = document.getElementById('creditModal');
+        const closeCreditModal = document.getElementById('closeCreditModal');
+
+
+        // Global State
+        let currentUser = null;
+        let currentClassrooms = [];
+        let selectedHomeworkForGrading = null;
+        let fullHomeworkList = [];
+
+        // --- Theme Logic ---
+        function checkTheme() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const totalMinutes = hour * 60 + minute;
+
+            const isDay = totalMinutes >= 360 && totalMinutes < 1110;
+            const body = document.body;
+            
+            if (isDay) {
+                body.classList.remove('night-mode');
+                logoutBtn.classList.remove('logoutButton--dark');
+                logoutBtn.classList.add('logoutButton--light');
+            } else {
+                body.classList.add('night-mode');
+                logoutBtn.classList.remove('logoutButton--light');
+                logoutBtn.classList.add('logoutButton--dark');
+            }
+        }
+        
+        checkTheme();
+        setInterval(checkTheme, 60000);
+
+        // --- Logout Animation Logic ---
+        const logoutButtonStates = {
+            'default': { '--figure-duration': '100', '--transform-figure': 'none', '--walking-duration': '100', '--transform-arm1': 'none', '--transform-wrist1': 'none', '--transform-arm2': 'none', '--transform-wrist2': 'none', '--transform-leg1': 'none', '--transform-calf1': 'none', '--transform-leg2': 'none', '--transform-calf2': 'none' },
+            'hover': { '--figure-duration': '100', '--transform-figure': 'translateX(1.5px)', '--walking-duration': '100', '--transform-arm1': 'rotate(-5deg)', '--transform-wrist1': 'rotate(-15deg)', '--transform-arm2': 'rotate(5deg)', '--transform-wrist2': 'rotate(6deg)', '--transform-leg1': 'rotate(-10deg)', '--transform-calf1': 'rotate(5deg)', '--transform-leg2': 'rotate(20deg)', '--transform-calf2': 'rotate(-20deg)' },
+            'walking1': { '--figure-duration': '300', '--transform-figure': 'translateX(11px)', '--walking-duration': '300', '--transform-arm1': 'translateX(-4px) translateY(-2px) rotate(120deg)', '--transform-wrist1': 'rotate(-5deg)', '--transform-arm2': 'translateX(4px) rotate(-110deg)', '--transform-wrist2': 'rotate(-5deg)', '--transform-leg1': 'translateX(-3px) rotate(80deg)', '--transform-calf1': 'rotate(-30deg)', '--transform-leg2': 'translateX(4px) rotate(-60deg)', '--transform-calf2': 'rotate(20deg)' },
+            'walking2': { '--figure-duration': '400', '--transform-figure': 'translateX(17px)', '--walking-duration': '300', '--transform-arm1': 'rotate(60deg)', '--transform-wrist1': 'rotate(-15deg)', '--transform-arm2': 'rotate(-45deg)', '--transform-wrist2': 'rotate(6deg)', '--transform-leg1': 'rotate(-5deg)', '--transform-calf1': 'rotate(10deg)', '--transform-leg2': 'rotate(10deg)', '--transform-calf2': 'rotate(-20deg)' },
+            'falling1': { '--figure-duration': '1600', '--walking-duration': '400', '--transform-arm1': 'rotate(-60deg)', '--transform-wrist1': 'none', '--transform-arm2': 'rotate(30deg)', '--transform-wrist2': 'rotate(120deg)', '--transform-leg1': 'rotate(-30deg)', '--transform-calf1': 'rotate(-20deg)', '--transform-leg2': 'rotate(20deg)' },
+            'falling2': { '--walking-duration': '300', '--transform-arm1': 'rotate(-100deg)', '--transform-arm2': 'rotate(-60deg)', '--transform-wrist2': 'rotate(60deg)', '--transform-leg1': 'rotate(80deg)', '--transform-calf1': 'rotate(20deg)', '--transform-leg2': 'rotate(-60deg)' },
+            'falling3': { '--walking-duration': '500', '--transform-arm1': 'rotate(-30deg)', '--transform-wrist1': 'rotate(40deg)', '--transform-arm2': 'rotate(50deg)', '--transform-wrist2': 'none', '--transform-leg1': 'rotate(-30deg)', '--transform-leg2': 'rotate(20deg)', '--transform-calf2': 'none' }
+        };
+
+        let updateButtonState = (button, state) => {
+          if (logoutButtonStates[state]) {
+            button.state = state
+            for (let key in logoutButtonStates[state]) {
+              button.style.setProperty(key, logoutButtonStates[state][key])
+            }
+          }
+        }
+
+        logoutBtn.addEventListener('mouseenter', () => { if (logoutBtn.state === 'default') updateButtonState(logoutBtn, 'hover') });
+        logoutBtn.addEventListener('mouseleave', () => { if (logoutBtn.state === 'hover') updateButtonState(logoutBtn, 'default') });
+        
+        logoutBtn.addEventListener('click', () => {
+          if (logoutBtn.classList.contains('clicked')) return;
+          logoutBtn.classList.add('clicked');
+          updateButtonState(logoutBtn, 'walking1');
+          setTimeout(() => {
+            logoutBtn.classList.add('door-slammed');
+            updateButtonState(logoutBtn, 'walking2');
+            setTimeout(() => {
+              logoutBtn.classList.add('falling');
+              updateButtonState(logoutBtn, 'falling1');
+              setTimeout(() => {
+                updateButtonState(logoutBtn, 'falling2');
+                setTimeout(() => {
+                  updateButtonState(logoutBtn, 'falling3');
+                  setTimeout(() => {
+                    handleLogout();
+                    logoutBtn.classList.remove('clicked');
+                    logoutBtn.classList.remove('door-slammed');
+                    logoutBtn.classList.remove('falling');
+                    updateButtonState(logoutBtn, 'default');
+                  }, 1000);
+                }, logoutButtonStates['falling2']['--walking-duration']);
+              }, logoutButtonStates['falling1']['--walking-duration']);
+            }, logoutButtonStates['walking2']['--figure-duration']);
+          }, logoutButtonStates['walking1']['--figure-duration']);
+        });
+
+        // --- Utility Functions ---
+        function showMessageBox(message) {
+            messageBoxContent.textContent = message;
+            customMessageBox.classList.remove('hidden');
+        }
+        function hideMessageBox() { customMessageBox.classList.add('hidden'); }
+        function showLoading() { loadingOverlay.classList.remove('hidden'); }
+        function hideLoading() { loadingOverlay.classList.add('hidden'); }
+
+        async function fetchData(action, params = {}) {
+            showLoading();
+            const formData = new URLSearchParams();
+            formData.append('action', action);
+            if (currentUser && currentUser.username) {
+                formData.append('currentUser', currentUser.username);
+            }
+            for (const key in params) { formData.append(key, params[key]); }
+            try {
+                const response = await fetch(APP_SCRIPT_URL, { method: 'POST', body: formData });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (!data.success) throw new Error(data.message || 'Unknown server error.');
+                return data;
+            } catch (error) {
+                showMessageBox(`ข้อผิดพลาด: ${error.message}`);
+                console.error('Fetch error:', error);
+                return { success: false, message: error.message };
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function populateClassroomSelects(selectElement, includeAllOption = false) {
+            selectElement.innerHTML = '';
+            if (includeAllOption) {
+                selectElement.innerHTML += '<option value="">ทั้งหมด</option>';
+            } else {
+                selectElement.innerHTML += '<option value="">เลือกห้องเรียน</option>';
+            }
+            currentClassrooms.forEach(classroom => {
+                const option = document.createElement('option');
+                option.value = classroom.ClassroomName;
+                option.textContent = classroom.ClassroomName;
+                selectElement.appendChild(option);
+            });
+        }
+
+        function updateStudentIdMax() {
+            const selectedClassroomName = classroomSelect.value;
+            const classroom = currentClassrooms.find(cls => cls.ClassroomName === selectedClassroomName);
+            studentIdInput.max = classroom ? classroom.StudentCount : '';
+            studentIdInput.placeholder = classroom ? `เช่น 1-${classroom.StudentCount}` : 'เช่น 15';
+        }
+
+        // --- Student View Functions ---
+        async function loadClassrooms() {
+            const data = await fetchData('getClasses');
+            if (data.success) {
+                currentClassrooms = data.classrooms;
+                populateClassroomSelects(classroomSelect);
+                populateClassroomSelects(newHwClassroom);
+                populateClassroomSelects(teacherClassroomSelect, true);
+            }
+        }
+
+        async function displayStudentHomework() {
+            const classroom = classroomSelect.value;
+            const studentId = parseInt(studentIdInput.value);
+            if (!classroom || isNaN(studentId) || studentId <= 0) {
+                showMessageBox('กรุณาเลือกห้องเรียนและป้อนเลขที่ให้ถูกต้อง');
+                return;
+            }
+            if (studentIdInput.max && studentId > parseInt(studentIdInput.max)) {
+                showMessageBox(`เลขที่ต้องอยู่ระหว่าง 1 ถึง ${studentIdInput.max}`);
+                return;
+            }
+
+            const data = await fetchData('getHomeworkForStudent', { classroom, studentId });
+
+            homeworkResults.innerHTML = '';
+            noHomeworkMessage.classList.add('hidden');
+            homeworkFilterControls.classList.add('hidden');
+
+            if (data.success && data.homework.length > 0) {
+                fullHomeworkList = data.homework;
+                homeworkFilterControls.classList.remove('hidden');
+                populateFiltersAndRender();
+            } else {
+                noHomeworkMessage.classList.remove('hidden');
+                fullHomeworkList = [];
+            }
+        }
+
+        function populateFiltersAndRender() {
+            const subjects = [...new Set(fullHomeworkList.map(hw => hw.Subject || 'ไม่ระบุ'))];
+            subjectFilter.innerHTML = '<option value="">ทุกวิชา</option>';
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectFilter.appendChild(option);
+            });
+
+            subjectFilter.value = "";
+            document.querySelectorAll('#statusFilter .filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('#statusFilter .filter-btn[data-status="all"]').classList.add('active');
+
+            renderHomeworkCards();
+        }
+
+        function renderHomeworkCards() {
+            const selectedSubject = subjectFilter.value;
+            const selectedStatus = document.querySelector('#statusFilter .filter-btn.active').dataset.status;
+
+            let filteredList = [...fullHomeworkList];
+
+            if (selectedSubject) {
+                filteredList = filteredList.filter(hw => (hw.Subject || 'ไม่ระบุ') === selectedSubject);
+            }
+
+            if (selectedStatus !== 'all') {
+                filteredList = filteredList.filter(hw => {
+                    const today = new Date(); today.setHours(0, 0, 0, 0);
+                    const dueDate = new Date(hw.DueDate); dueDate.setHours(0, 0, 0, 0);
+                    
+                    let effectiveStatus = 'pending';
+                    if (hw.SubmissionStatus === 'Submitted') effectiveStatus = 'submitted';
+                    else if (['Graded', 'Returned'].includes(hw.SubmissionStatus)) effectiveStatus = 'graded';
+                    else {
+                         if (today > dueDate) effectiveStatus = 'pending';
+                         else if (dueDate.getTime() - today.getTime() <= 7 * 24 * 60 * 60 * 1000) effectiveStatus = 'pending';
+                    }
+                    return effectiveStatus === selectedStatus;
+                });
+            }
+
+            homeworkResults.innerHTML = '';
+            if (filteredList.length === 0) {
+                 homeworkResults.innerHTML = `<p class="text-center text-gray-500 md:col-span-2 lg:col-span-3">ไม่พบการบ้านตามเงื่อนไขที่เลือก</p>`;
+                 return;
+            }
+
+            filteredList.forEach(hw => {
+                 let statusText, statusClass, scoreDisplay = '', checkmarkIcon = '', submissionArea = '';
+                 const today = new Date(); today.setHours(0, 0, 0, 0);
+                 const dueDate = new Date(hw.DueDate); dueDate.setHours(0, 0, 0, 0);
+
+                if (hw.SubmissionStatus === 'Graded') {
+                    statusText = 'ตรวจแล้ว'; statusClass = 'status-graded';
+                    scoreDisplay = `<p class="text-gray-700 text-sm"><span class="font-semibold"><i class="fas fa-poll mr-1"></i> คะแนน:</span> ${hw.Score} / ${hw.MaxScore}</p>`;
+                    checkmarkIcon = `<i class="fas fa-check-circle checkmark-icon"></i>`;
+                } else if (hw.SubmissionStatus === 'Returned') {
+                    statusText = 'ตีกลับ'; statusClass = 'status-returned';
+                    scoreDisplay = `<p class="text-gray-700 text-sm"><span class="font-semibold"><i class="fas fa-comment-dots mr-1"></i> คอมเมนต์:</span> ${hw.Comments || 'ไม่มี'}</p>`;
+                    if (hw.OnlineSubmission) {
+                        // FIXED: Added id="submitMessage-${hw.Id}" and correct classes for re-submission bug
+                        submissionArea = `<div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-md"><p class="text-red-700 text-sm font-semibold mb-2"><i class="fas fa-exclamation-triangle mr-1"></i> งานนี้ถูกตีกลับแล้ว คุณสามารถส่งใหม่ได้:</p><div class="flex flex-col sm:flex-row gap-2 items-center"><input type="file" data-homework-id="${hw.Id}" class="student-submission-file block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 flex-grow"><button data-homework-id="${hw.Id}" class="btn-primary student-submit-btn flex-shrink-0"><i class="fas fa-paper-plane mr-2"></i>ส่งงาน</button></div><p id="submitMessage-${hw.Id}" class="text-sm text-red-500 mt-2 hidden"></p></div>`;
+                    }
+                } else if (hw.SubmissionStatus === 'Submitted') {
+                    statusText = 'ส่งแล้ว (รอตรวจ)'; statusClass = 'status-submitted';
+                    checkmarkIcon = `<i class="fas fa-check-circle checkmark-icon"></i>`;
+                     if (hw.OnlineSubmission) {
+                        submissionArea = `<div class="mt-4 p-3 bg-green-50 border border-green-200 rounded-md"><p class="text-green-700 text-sm font-semibold mb-2">คุณส่งงานแล้ว (คลิกเพื่อดูไฟล์):</p><a href="${hw.SubmissionLink}" target="_blank" class="text-blue-600 hover:underline break-all text-sm">${hw.SubmissionLink}</a><p class="text-xs text-gray-500 mt-1">หากต้องการส่งไฟล์ใหม่ ให้ส่งทับไฟล์เดิมได้เลย</p></div>`;
+                    }
+                } else {
+                    if (today > dueDate) { statusText = 'เลยกำหนด'; statusClass = 'status-overdue'; }
+                    else if (dueDate.getTime() - today.getTime() <= 7 * 24 * 60 * 60 * 1000) { statusText = 'ใกล้ถึงกำหนด'; statusClass = 'status-due-soon'; }
+                    else { statusText = 'ยังไม่ส่ง'; statusClass = 'status-pending'; }
+
+                    if (hw.OnlineSubmission) {
+                        submissionArea = `<div class="mt-4 p-3 bg-indigo-50 border border-indigo-200 rounded-md"><p class="text-indigo-700 text-sm font-semibold mb-2"><i class="fas fa-upload mr-1"></i> ส่งงานออนไลน์ที่นี่:</p><div class="flex flex-col sm:flex-row gap-2 items-center"><input type="file" data-homework-id="${hw.Id}" class="student-submission-file block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 flex-grow"><button data-homework-id="${hw.Id}" class="btn-primary student-submit-btn flex-shrink-0"><i class="fas fa-paper-plane mr-2"></i>ส่งงาน</button></div><p id="submitMessage-${hw.Id}" class="text-sm text-red-500 mt-2 hidden"></p></div>`;
+                    } else {
+                        submissionArea = `<div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-md"><p class="text-gray-700 text-sm font-semibold"><i class="fas fa-info-circle mr-1"></i> งานนี้ไม่มีการรับงานออนไลน์</p><p class="text-gray-600 text-xs">โปรดส่งงานตามวิธีการที่ครูกำหนด</p></div>`;
+                    }
+                }
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    ${checkmarkIcon}
+                    <h3 class="text-xl font-bold text-gray-800 mb-2"><i class="fas fa-file-signature mr-2" style="color:#6366f1;"></i>${hw.HomeworkName}</h3>
+                    <p class="text-gray-600 text-sm mb-1"><span class="font-semibold"><i class="fas fa-book-open mr-1"></i> วิชา:</span> ${hw.Subject || 'ไม่ระบุ'}</p> <p class="text-gray-600 mb-2">${hw.Details}</p>
+                    <div class="flex justify-between items-center text-sm mb-2">
+                        <p class="text-gray-700"><span class="font-semibold"><i class="fas fa-calendar-check mr-1" style="color:#2563eb;"></i> กำหนดส่ง:</span> ${new Date(hw.DueDate).toLocaleDateString('th-TH')}</p>
+                        <p class="text-gray-700"><span class="font-semibold"><i class="fas fa-star mr-1" style="color:#f59e0b;"></i> คะแนนเต็ม:</span> ${hw.MaxScore} คะแนน</p>
+                    </div>
+                    ${scoreDisplay}
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                    ${submissionArea}
+                `;
+                homeworkResults.appendChild(card);
+            });
+
+            document.querySelectorAll('.student-submit-btn').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const homeworkId = event.target.dataset.homeworkId;
+                    const fileInput = event.target.closest('.card').querySelector(`.student-submission-file[data-homework-id="${homeworkId}"]`);
+                    const submitMessage = event.target.closest('.card').querySelector(`#submitMessage-${homeworkId}`);
+                    const file = fileInput.files[0];
+
+                    if (!file) {
+                        submitMessage.textContent = 'กรุณาเลือกไฟล์ก่อนกดส่ง';
+                        submitMessage.classList.remove('hidden');
+                        return;
+                    }
+                    submitMessage.classList.add('hidden');
+                    showLoading();
+
+                    const reader = new FileReader();
+                    reader.onload = async (e) => {
+                        const fileData = e.target.result;
+                        const data = await fetchData('updateSubmission', {
+                            homeworkId,
+                            studentId: studentIdInput.value,
+                            classroom: classroomSelect.value,
+                            fileName: file.name,
+                            mimeType: file.type,
+                            fileData: fileData,
+                            status: 'Submitted', // Force status update
+                            score: '',
+                            comments: ''
+                        });
+                        hideLoading();
+                        if (data.success) {
+                            showMessageBox('ส่งงานเรียบร้อยแล้ว!');
+                            displayStudentHomework(); 
+                        }
+                    };
+                    reader.onerror = () => {
+                        hideLoading();
+                        showMessageBox('เกิดข้อผิดพลาดในการอ่านไฟล์');
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+        }
+
+        // --- Staff & Admin Functions ---
+        function showStaffLogin() { staffLoginModal.classList.remove('hidden'); staffUsername.value = ''; staffPassword.value = ''; loginMessage.classList.add('hidden'); }
+        function hideStaffLogin() { staffLoginModal.classList.add('hidden'); }
+
+        async function handleLogin() {
+            const username = staffUsername.value; const password = staffPassword.value;
+            if (!username || !password) { loginMessage.textContent = 'กรุณาป้อนชื่อผู้ใช้และรหัสผ่าน'; loginMessage.classList.remove('hidden'); return; }
+            const data = await fetchData('login', { username, password });
+            if (data.success) { currentUser = data; hideStaffLogin(); renderStaffDashboard(); }
+            else { loginMessage.textContent = data.message; loginMessage.classList.remove('hidden'); }
+        }
+
+        async function renderStaffDashboard() {
+            document.getElementById('studentView').classList.add('hidden');
+            staffDashboard.classList.remove('hidden');
+            dashboardTitle.textContent = `ยินดีต้อนรับ, ${currentUser.fullName || currentUser.username}! (${currentUser.role === 'admin' ? 'ผู้ดูแลระบบ' : 'ครู'})`;
+            
+            checkTheme();
+            
+            if (currentUser.role === 'admin') {
+                adminControls.classList.remove('hidden');
+                teacherControls.classList.remove('hidden');
+                await loadAdminData();
+            } else {
+                adminControls.classList.add('hidden');
+                teacherControls.classList.remove('hidden');
+                await loadTeacherHomework();
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            staffDashboard.classList.add('hidden');
+            document.getElementById('studentView').classList.remove('hidden');
+            adminClassroomCounts.innerHTML = ''; teachersList.innerHTML = ''; teacherHomeworkList.innerHTML = '';
+            noTeacherHomeworkMessage.classList.add('hidden');
+            classroomSelect.value = ''; studentIdInput.value = ''; homeworkResults.innerHTML = '';
+            noHomeworkMessage.classList.add('hidden');
+            homeworkFilterControls.classList.add('hidden');
+            fullHomeworkList = [];
+        }
+
+        async function loadAdminData() {
+            const data = await fetchData('getAdminData');
+            if (data.success) {
+                currentClassrooms = data.classrooms;
+                populateClassroomSelects(classroomSelect);
+                populateClassroomSelects(newHwClassroom);
+                populateClassroomSelects(teacherClassroomSelect, true);
+                renderClassroomCounts(data.classrooms);
+                renderTeachersList(data.teachers);
+            }
+            await loadTeacherHomework();
+        }
+
+        function renderClassroomCounts(classrooms) {
+            adminClassroomCounts.innerHTML = '';
+            classrooms.forEach(cls => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center space-x-2';
+                div.innerHTML = `<label class="font-medium text-gray-700">${cls.ClassroomName}:</label><input type="number" data-classroom="${cls.ClassroomName}" value="${cls.StudentCount}" min="1" class="input-field w-24"><button data-classroom="${cls.ClassroomName}" class="update-count-btn btn-green text-sm px-3 py-1"><i class="fas fa-save mr-1"></i>อัปเดต</button>`;
+                adminClassroomCounts.appendChild(div);
+            });
+            document.querySelectorAll('.update-count-btn').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const classroomName = event.target.dataset.classroom;
+                    const studentCount = parseInt(event.target.previousElementSibling.value);
+                    if (studentCount > 0) {
+                        const data = await fetchData('updateClassroomStudentCount', { classroomName, studentCount });
+                        if (data.success) { showMessageBox(data.message); await loadAdminData(); }
+                    } else { showMessageBox('จำนวนนักเรียนต้องมากกว่า 0'); }
+                });
+            });
+        }
+
+        function renderTeachersList(teachers) {
+            teachersList.innerHTML = '';
+            if (teachers.length === 0) { teachersList.innerHTML = `<tr><td colspan="4" class="py-3 px-4 text-center text-gray-500">ไม่มีข้อมูลครู</td></tr>`; return; }
+            teachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td class="py-3 px-4">${teacher.Username}</td><td class="py-3 px-4">${teacher.FullName}</td><td class="py-3 px-4">${teacher.Subjects}</td><td class="py-3 px-4"><button data-username="${teacher.Username}" class="delete-teacher-btn btn-red text-sm px-3 py-1"><i class="fas fa-trash-alt mr-1"></i>ลบ</button></td>`;
+                teachersList.appendChild(row);
+            });
+            document.querySelectorAll('.delete-teacher-btn').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const usernameToDelete = event.target.dataset.username;
+                    if (confirm(`คุณแน่ใจหรือไม่ที่ต้องการลบครู ${usernameToDelete}?`)) {
+                        const data = await fetchData('deleteTeacher', { username: usernameToDelete });
+                        if (data.success) { showMessageBox(data.message); await loadAdminData(); }
+                    }
+                });
+            });
+        }
+
+        async function addNewTeacher() {
+            const username = newTeacherUsername.value; const password = newTeacherPassword.value;
+            const fullName = newTeacherFullName.value; const subjects = newTeacherSubjects.value;
+            if (!username || !password || !fullName || !subjects) { showMessageBox('กรุณากรอกข้อมูลครูให้ครบทุกช่อง'); return; }
+            const data = await fetchData('addTeacher', { username, password, fullName, subjects });
+            if (data.success) {
+                showMessageBox(data.message);
+                newTeacherUsername.value = ''; newTeacherPassword.value = ''; newTeacherFullName.value = ''; newTeacherSubjects.value = '';
+                await loadAdminData();
+            }
+        }
+
+        // --- Teacher Functions ---
+        function showCreateHomeworkModal() {
+            createHomeworkModal.classList.remove('hidden');
+            newHwName.value = ''; newHwSubject.value = ''; newHwClassroom.value = ''; newHwDetails.value = '';
+            newHwDueDate.value = ''; newHwMaxScore.value = ''; newHwOnlineSubmission.checked = false;
+            createHomeworkMessage.classList.add('hidden');
+        }
+        function hideCreateHomeworkModal() { createHomeworkModal.classList.add('hidden'); }
+
+        async function saveNewHomework() {
+            const homeworkName = newHwName.value; const subject = newHwSubject.value;
+            const classroom = newHwClassroom.value; const details = newHwDetails.value;
+            const dueDate = newHwDueDate.value; const maxScore = newHwMaxScore.value;
+            const onlineSubmission = newHwOnlineSubmission.checked;
+
+            if (!homeworkName || !subject || !classroom || !dueDate || !maxScore) {
+                createHomeworkMessage.textContent = 'กรุณากรอกข้อมูลสำคัญให้ครบ: ชื่อการบ้าน, วิชา, ห้องเรียน, กำหนดส่ง, คะแนนเต็ม';
+                createHomeworkMessage.classList.remove('hidden');
+                return;
+            }
+
+            const data = await fetchData('createHomework', {
+                homeworkName, subject, classroom, details, dueDate, maxScore,
+                onlineSubmission: onlineSubmission.toString(),
+                teacherUsername: currentUser.username
+            });
+
+            if (data.success) { showMessageBox(data.message); hideCreateHomeworkModal(); await loadTeacherHomework(); }
+            else { createHomeworkMessage.textContent = data.message; createHomeworkMessage.classList.remove('hidden'); }
+        }
+
+        async function loadTeacherHomework() {
+            const selectedClassroom = teacherClassroomSelect.value;
+            const data = await fetchData('getTeacherHomework', {
+                username: currentUser.username,
+                classroom: selectedClassroom === '' ? null : selectedClassroom
+            });
+
+            teacherHomeworkList.innerHTML = '';
+            noTeacherHomeworkMessage.classList.add('hidden');
+
+            if (data.success && data.homework.length > 0) {
+                data.homework.forEach(hw => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="py-3 px-4 font-semibold">${hw.HomeworkName}<br><span class="text-xs text-gray-500">${hw.Subject}</span></td>
+                        <td class="py-3 px-4">${hw.Classroom}</td>
+                        <td class="py-3 px-4">${new Date(hw.DueDate).toLocaleDateString('th-TH')}</td>
+                        <td class="py-3 px-4">${hw.MaxScore}</td>
+                        <td class="py-3 px-4">${hw.OnlineSubmission ? '<i class="fas fa-check-circle text-green-500"></i>' : '<i class="fas fa-times-circle text-red-500"></i>'}</td>
+                        <td class="py-3 px-4 space-x-2 flex"><button data-homework-id="${hw.Id}" class="grade-homework-btn btn-green text-sm px-3 py-1"><i class="fas fa-tasks mr-1"></i>ตรวจงาน</button><button data-homework-id="${hw.Id}" class="delete-homework-btn btn-red text-sm px-3 py-1"><i class="fas fa-trash-alt mr-1"></i>ลบ</button></td>
+                    `;
+                    teacherHomeworkList.appendChild(row);
+                });
+
+                document.querySelectorAll('.grade-homework-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const homeworkId = event.target.dataset.homeworkId;
+                        const homework = data.homework.find(hw => hw.Id === homeworkId);
+                        if (homework) { selectedHomeworkForGrading = homework; showGradeHomeworkModal(homework); }
+                    });
+                });
+
+                document.querySelectorAll('.delete-homework-btn').forEach(button => {
+                    button.addEventListener('click', async (event) => {
+                        const homeworkId = event.target.dataset.homeworkId;
+                        if (confirm('คุณแน่ใจหรือไม่ที่ต้องการลบการบ้านนี้?')) {
+                            const deleteData = await fetchData('deleteHomework', { homeworkId });
+                            if (deleteData.success) { showMessageBox('ลบการบ้านเรียบร้อยแล้ว'); await loadTeacherHomework(); }
+                        }
+                    });
+                });
+            } else { noTeacherHomeworkMessage.classList.remove('hidden'); }
+        }
+
+        async function showGradeHomeworkModal(homework) {
+            gradeModalTitle.textContent = `ตรวจงาน: ${homework.HomeworkName} (${homework.Classroom})`;
+            studentGradingList.innerHTML = ''; gradeHomeworkMessage.classList.add('hidden');
+            gradeHomeworkModal.classList.remove('hidden');
+
+            const data = await fetchData('getStudentSubmissionsForGrading', { homeworkId: homework.Id, classroom: homework.Classroom });
+
+            if (data.success && data.students.length > 0) {
+                studentGradingList.dataset.originalSubmissions = JSON.stringify(data.students);
+                const dueDate = new Date(homework.DueDate);
+
+                data.students.forEach(student => {
+                    const studentDiv = document.createElement('div');
+                    studentDiv.className = 'p-4 border border-gray-200 rounded-lg bg-gray-50';
+                    let submissionDisplay = '';
+                    let scoreHtml = '';
+
+                    if (homework.OnlineSubmission) {
+                        if (student.SubmissionLink) {
+                            const submissionDate = new Date(student.SubmissionDate);
+                            const submissionTime = submissionDate.toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short'});
+                            const isLate = submissionDate > new Date(dueDate.getTime() + (24 * 60 * 60 * 1000 - 1));
+                            const lateStatus = isLate ? '<span class="text-red-600 font-bold ml-2">(ส่งสาย)</span>' : '<span class="text-green-600 font-bold ml-2">(ส่งในเวลา)</span>';
+                            submissionDisplay = `<div class="mb-3 text-sm"><span class="font-semibold text-gray-700"><i class="fas fa-file-alt mr-1"></i> ไฟล์ที่ส่ง (คลิกเพื่อเปิด):</span> <a href="${student.SubmissionLink}" target="_blank" class="text-blue-600 hover:underline break-all">${student.SubmissionLink.split('/').pop()}</a><br><span class="font-semibold text-gray-700"><i class="fas fa-calendar-day mr-1"></i> วันที่ส่ง:</span> ${submissionTime}${lateStatus}</div>`;
+                        } else {
+                            submissionDisplay = `<div class="mb-3 text-sm text-gray-500"><i class="fas fa-times-circle mr-1"></i> ยังไม่ส่งงาน (ออนไลน์)</div>`;
+                        }
+                    } else {
+                         submissionDisplay = `<div class="mb-3 text-sm text-gray-500"><i class="fas fa-walking mr-1"></i> เป็นการส่งงานที่โรงเรียน (Offline)</div>`;
+                    }
+
+                    scoreHtml = `
+                        <div class="flex items-center space-x-2 md:space-x-4">
+                            <label class="text-gray-700"><i class="fas fa-star-half-alt mr-1">
+                            <input type="number" class="input-field w-24 score-input" data-student-id="${student.StudentId}" value="${student.Score}" min="0" max="${homework.MaxScore}">
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="form-checkbox text-red-600 returned-checkbox" data-student-id="${student.StudentId}" ${student.Status === 'Returned' ? 'checked' : ''}>
+                                    <span class="ml-2 text-red-700"><i class="fas fa-undo-alt mr-1"></i> ตีกลับ</span>
+                                </label>
+                            </div>
+                            <textarea class="input-field comments-input h-16 resize-y mt-2" data-student-id="${student.StudentId}" placeholder="คอมเมนต์ (หากตีกลับ)">${student.Comments || ''}</textarea>
+                        `;
+
+                        studentDiv.innerHTML = `
+                            <div class="flex flex-col md:flex-row items-start justify-between">
+                                <h4 class="font-bold text-lg text-gray-800 mb-2 md:mb-0">เลขที่ ${student.StudentId}</h4>
+                            </div>
+                            ${submissionDisplay}
+                            ${scoreHtml}
+                        `;
+                        studentGradingList.appendChild(studentDiv);
+                    });
+                } else {
+                    studentGradingList.innerHTML = `<p class="text-center text-gray-500">ไม่พบข้อมูลการส่งงานสำหรับห้องเรียนนี้</p>`;
+                }
+            }
+
+        function hideGradeHomeworkModal() { gradeHomeworkModal.classList.add('hidden'); selectedHomeworkForGrading = null; studentGradingList.removeAttribute('data-original-submissions'); }
+
+        async function saveGrading() {
+            const studentDivs = studentGradingList.querySelectorAll('.p-4');
+            const originalSubs = JSON.parse(studentGradingList.dataset.originalSubmissions || '[]');
+            let updates = [];
+
+            for (const div of studentDivs) {
+                const studentId = parseInt(div.querySelector('.score-input').dataset.studentId);
+                const score = div.querySelector('.score-input').value;
+                const comments = div.querySelector('.comments-input').value;
+                const isReturned = div.querySelector('.returned-checkbox').checked;
+
+                const original = originalSubs.find(s => s.StudentId === studentId) || {};
+                let status = 'Pending';
+                if(isReturned) { status = 'Returned'; }
+                else if (score !== '' && score !== null) { status = 'Graded'; }
+                else if (original.SubmissionLink) { status = 'Submitted'; }
+
+                if (original.Score != score || original.Comments != comments || original.Status != status) {
+                     updates.push(fetchData('updateSubmission', {
+                        homeworkId: selectedHomeworkForGrading.Id,
+                        studentId,
+                        classroom: selectedHomeworkForGrading.Classroom,
+                        score: score,
+                        comments: comments,
+                        status: status
+                    }));
+                }
+            }
+
+            if (updates.length === 0) { showMessageBox('ไม่มีการเปลี่ยนแปลงที่ต้องบันทึก'); hideGradeHomeworkModal(); return; }
+
+            const results = await Promise.all(updates);
+            if (results.every(res => res.success)) {
+                showMessageBox('บันทึกคะแนนเรียบร้อยแล้ว');
+                hideGradeHomeworkModal();
+                await loadTeacherHomework();
+            } else {
+                 showMessageBox('เกิดข้อผิดพลาดในการบันทึกข้อมูลบางรายการ');
+            }
+        }
+
+        // --- Event Listeners ---
+        classroomSelect.addEventListener('change', updateStudentIdMax);
+        showHomeworkBtn.addEventListener('click', displayStudentHomework);
+        staffLoginLink.addEventListener('click', (e) => { e.preventDefault(); showStaffLogin(); });
+        closeLoginModal.addEventListener('click', hideStaffLogin);
+        loginBtn.addEventListener('click', handleLogin);
+        staffPassword.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
+        
+        // Credit Modal Listeners
+        creditLink.addEventListener('click', (e) => { e.preventDefault(); creditModal.classList.remove('hidden'); });
+        closeCreditModal.addEventListener('click', () => { creditModal.classList.add('hidden'); });
+        creditModal.addEventListener('click', (e) => { if(e.target === creditModal) creditModal.classList.add('hidden'); });
+
+        addTeacherBtn.addEventListener('click', addNewTeacher);
+        teacherClassroomSelect.addEventListener('change', loadTeacherHomework);
+        createHomeworkBtn.addEventListener('click', showCreateHomeworkModal);
+        closeCreateHomeworkModal.addEventListener('click', hideCreateHomeworkModal);
+        saveNewHomeworkBtn.addEventListener('click', saveNewHomework);
+        closeGradeHomeworkModal.addEventListener('click', hideGradeHomeworkModal);
+        saveGradingBtn.addEventListener('click', saveGrading);
+        closeMessageBox.addEventListener('click', hideMessageBox);
+        document.addEventListener('DOMContentLoaded', loadClassrooms);
+
+        subjectFilter.addEventListener('change', renderHomeworkCards);
+        statusFilter.addEventListener('click', (event) => {
+            if (event.target.tagName === 'BUTTON') {
+                document.querySelectorAll('#statusFilter .filter-btn').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+                renderHomeworkCards();
+            }
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+    <script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'th',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  function translateTo(lang) {
+    const select = document.querySelector('select.goog-te-combo');
+    if (select) {
+      select.value = lang;
+      const event = new Event('change', { bubbles: true });
+      select.dispatchEvent(event);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .goog-te-banner-frame.skiptranslate, .goog-te-gadget-icon, .goog-te-balloon-frame, .goog-te-menu-frame, #goog-gt-tt, .goog-te-banner { display: none !important; }
+      body { top: 0px !important; }
+    `;
+    document.head.appendChild(style);
+    
+    const trigger = document.getElementById('lang-widget-trigger');
+    const panel = document.getElementById('lang-dropdown-panel');
+    const currentLangText = document.getElementById('lang-widget-current');
+
+    if (!trigger || !panel || !currentLangText) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      panel.classList.toggle('hidden');
+      trigger.classList.toggle('active');
+    });
+
+    window.addEventListener('click', () => {
+      panel.classList.add('hidden');
+      trigger.classList.remove('active');
+    });
+
+    function populateCustomDropdown() {
+      const googleSelect = document.querySelector('select.goog-te-combo');
+      if (googleSelect && googleSelect.options.length > 1) {
+        panel.innerHTML = ''; 
+        for (const option of googleSelect.options) {
+          if (option.value === "") continue; 
+          const langItem = document.createElement('div');
+          langItem.className = 'lang-option';
+          langItem.textContent = option.textContent; 
+          langItem.dataset.value = option.value;     
+          langItem.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const langValue = e.target.dataset.value;
+            const langName = e.target.textContent;
+            translateTo(langValue); 
+            currentLangText.textContent = langName.split(' ')[0]; 
+            panel.classList.add('hidden');
+            trigger.classList.remove('active');
+          });
+          panel.appendChild(langItem);
+        }
+        return true; 
+      }
+      return false; 
+    }
+
+    const populateInterval = setInterval(() => {
+      if (populateCustomDropdown()) {
+        clearInterval(populateInterval); 
+        const browserLang = navigator.language.split('-')[0]; 
+        const googleSelect = document.querySelector('select.goog-te-combo');
+        if (browserLang !== 'th' && googleSelect) {
+            const targetOption = Array.from(googleSelect.options).find(opt => opt.value === browserLang);
+            if (targetOption) {
+                translateTo(browserLang); 
+                currentLangText.textContent = targetOption.textContent.split(' ')[0]; 
+            }
+        }
+      }
+    }, 100);
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    // ------------------------------------------
+    // 1. ตัวแปร Modal และปุ่มต่างๆ
+    // ------------------------------------------
+    const creditModal = document.getElementById('creditModal');
+    const closeCreditModalBtn = document.getElementById('closeCreditModal');
+    const openDonationModalBtn = document.getElementById('openDonationModal');
+    
+    const donationModal = document.getElementById('donationModal');
+    const closeDonationModalBtn = document.getElementById('closeDonationModal');
+    const selectPromptPayBtn = document.getElementById('selectPromptPay');
+    const selectTrueMoneyBtn = document.getElementById('selectTrueMoney');
+
+    const qrCodeModal = document.getElementById('qrCodeModal');
+    const closeQrCodeModalBtn = document.getElementById('closeQrCodeModal');
+    const qrCodeImage = document.getElementById('qrCodeImage');
+    const qrCodeTitle = document.getElementById('qrCodeTitle');
+    
+    const slides = document.querySelectorAll('.credit-slide');
+    const indicatorsContainer = document.getElementById('creditIndicators');
+    let currentSlide = 0;
+
+    // ------------------------------------------
+    // 2. ฟังก์ชัน Modal Helper
+    // ------------------------------------------
+    const openModal = (modalElement) => {
+        modalElement.classList.remove('hidden');
+    };
+
+    const closeModal = (modalElement) => {
+        modalElement.classList.add('hidden');
+    };
+
+    // ------------------------------------------
+    // 3. Carousel Logic
+    // ------------------------------------------
+    const showSlide = (index) => {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+        updateIndicators(index);
+    };
+
+    const nextSlide = () => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    };
+
+    const createIndicators = () => {
+        slides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.classList.add('indicator-dot');
+            dot.addEventListener('click', () => {
+                currentSlide = i;
+                showSlide(i);
+            });
+            indicatorsContainer.appendChild(dot);
+        });
+        updateIndicators(currentSlide);
+    };
+
+    const updateIndicators = (index) => {
+        Array.from(indicatorsContainer.children).forEach((dot, i) => {
+            dot.classList.remove('active');
+            if (i === index) {
+                dot.classList.add('active');
+            }
+        });
+    };
+    
+    // เริ่มสร้าง indicators และตั้งค่าให้สไลด์แรกแสดง
+    createIndicators();
+    showSlide(currentSlide);
+
+    // ตั้งเวลาให้สไลด์เปลี่ยนเองทุก 5 วินาที
+    setInterval(nextSlide, 5000);
+
+
+    // ------------------------------------------
+    // 4. Event Listeners สำหรับ Credit Modal
+    // ------------------------------------------
+    // ตัวอย่าง: ถ้ามีปุ่มที่เปิด Credit Modal ให้เพิ่ม Event Listener ที่นี่ เช่น:
+    // document.getElementById('openCreditBtn').addEventListener('click', () => openModal(creditModal));
+    
+    closeCreditModalBtn.addEventListener('click', () => closeModal(creditModal));
+
+    // ------------------------------------------
+    // 5. Event Listeners สำหรับ Donation Flow
+    // ------------------------------------------
+
+    // จาก Credit Modal ไป Donation Modal
+    openDonationModalBtn.addEventListener('click', () => {
+        closeModal(creditModal); // ปิด Credit Modal
+        openModal(donationModal); // เปิด Donation Modal
+    });
+
+    // ปิด Donation Modal
+    closeDonationModalBtn.addEventListener('click', () => closeModal(donationModal));
+
+    // เลือก พร้อมเพย์
+    selectPromptPayBtn.addEventListener('click', () => {
+        qrCodeImage.src = 'https://i.postimg.cc/MGWhR36b/pay.png';
+        qrCodeTitle.textContent = 'สนับสนุนด้วย พร้อมเพย์';
+        closeModal(donationModal); // ปิด Donation Modal
+        openModal(qrCodeModal); // เปิด QR Code Modal
+    });
+
+    // เลือก ทรูมันนี่
+    selectTrueMoneyBtn.addEventListener('click', () => {
+        qrCodeImage.src = 'https://i.postimg.cc/kM0M8CkG/true.png';
+        qrCodeTitle.textContent = 'สนับสนุนด้วย TrueMoney Wallet';
+        closeModal(donationModal); // ปิด Donation Modal
+        openModal(qrCodeModal); // เปิด QR Code Modal
+    });
+
+    // ปิด QR Code Modal
+    closeQrCodeModalBtn.addEventListener('click', () => {
+        closeModal(qrCodeModal);
+    });
+
+    // ------------------------------------------
+    // 6. ปิด Modal เมื่อคลิกนอก Modal (Optional)
+    // ------------------------------------------
+    window.addEventListener('click', (event) => {
+        if (event.target === creditModal) {
+            closeModal(creditModal);
+        } else if (event.target === donationModal) {
+            closeModal(donationModal);
+        } else if (event.target === qrCodeModal) {
+            closeModal(qrCodeModal);
+        }
+    });
+
+    // ------------------------------------------
+    // *** สำคัญ: จำเป็นต้องเปิด Credit Modal ด้วยตนเองในโค้ดของคุณ
+    // ------------------------------------------
+    // หากต้องการให้ Modal เปิดตอนเริ่มต้น สามารถใช้: 
+    // openModal(creditModal);
+    // หรือผูก Event Listener กับปุ่มที่เปิด Modal หลัก:
+    // document.getElementById('yourButtonId').addEventListener('click', () => openModal(creditModal));
+});
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+    #lang-widget-container { position: fixed; top: 12px; right: 12px; z-index: 9999; width: 160px; }
+    #lang-widget-trigger { display: flex; align-items: center; width: 100%; background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 8px 12px; font-size: 14px; font-weight: 500; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.05); transition: box-shadow 0.2s; text-align: left; }
+    #lang-widget-trigger:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    #lang-widget-trigger .fa-chevron-down { transition: transform 0.2s ease-in-out; }
+    #lang-dropdown-panel { position: absolute; top: calc(100% + 4px); right: 0; width: 100%; background: white; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); border: 1px solid #eee; max-height: 300px; overflow-y: auto; z-index: 10000; opacity: 1; transform: translateY(0); transition: opacity 0.2s ease, transform 0.2s ease; }
+    .lang-option { padding: 10px 14px; font-size: 14px; cursor: pointer; transition: background-color 0.2s; border-bottom: 1px solid #f5f5f5; }
+    .lang-option:last-child { border-bottom: none; }
+    .lang-option:hover { background-color: #f9fafb; }
+    #lang-dropdown-panel.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+    #lang-widget-trigger.active .fa-chevron-down { transform: rotate(180deg); }
+    
+    /* Dark Mode Support for Language Widget */
+    body.night-mode #lang-widget-trigger,
+    body.night-mode #lang-dropdown-panel {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #e5e7eb;
+    }
+    body.night-mode .lang-option {
+        border-bottom-color: #4b5563;
+    }
+    body.night-mode .lang-option:hover {
+        background-color: #4b5563;
+    }
+</style>
+<script>
+    const slides = document.querySelectorAll('.credit-slide');
+    let currentSlide = 0;
+
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 3000);
+</script>
+
+</body>
+</html>
